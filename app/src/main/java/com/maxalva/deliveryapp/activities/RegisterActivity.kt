@@ -3,10 +3,12 @@ package com.maxalva.deliveryapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.maxalva.deliveryapp.R
 
 class RegisterActivity : AppCompatActivity() {
@@ -50,6 +52,11 @@ class RegisterActivity : AppCompatActivity() {
         val password = editTextPassword.text.toString()
         val confirmPassword = editTextConfirmPassword.text.toString()
 
+        if (!isValidForm(name, lastName, email, phone, password, confirmPassword)) {
+            Toast.makeText(this, "El formulario no es válido", Toast.LENGTH_LONG).show()
+            return
+        }
+
         Log.d(TAG, "El nombre es $name")
         Log.d(TAG, "El apellido es $lastName")
         Log.d(TAG, "El email es $email")
@@ -58,5 +65,49 @@ class RegisterActivity : AppCompatActivity() {
     private fun goToLogin() {
         val i = Intent(this, MainActivity::class.java)
         startActivity(i)
+    }
+
+    private fun isValidForm(
+        name: String,
+        lastName: String,
+        email: String,
+        phone: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
+        if (name.isBlank()) {
+            return false
+        }
+
+        if (lastName.isBlank()) {
+            return false
+        }
+
+        if (email.isBlank()) {
+            return false
+        }
+
+        if (!email.isEmailValid()) {
+            return false
+        }
+
+        if (phone.isBlank()) {
+            return false
+        }
+
+        if (password.isBlank()) {
+            return false
+        }
+
+        if (password != confirmPassword) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
     }
 }
