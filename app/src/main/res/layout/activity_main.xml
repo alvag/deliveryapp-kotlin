@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
+            android:fontFamily="@font/indigo_daisy"
             android:textSize="50sp"
             android:layout_marginTop="60dp"
             android:layout_marginStart="25dp"/>
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_description"
+            android:fontFamily="@font/roboto_regular"
             android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"/>
 
@@ -35,6 +37,8 @@
             android:layout_marginTop="50dp"
             android:inputType="textEmailAddress"
             android:textSize="15sp"
+            android:background="@drawable/edittext_custom"
+            android:padding="15dp"
             android:autofillHints="emailAddress" />
 
         <EditText
@@ -46,6 +50,8 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="15sp"
+            android:background="@drawable/edittext_custom"
+            android:padding="15dp"
             android:autofillHints="password" />
 
     </LinearLayout>
@@ -63,7 +69,8 @@
             android:text="@string/log_in"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:backgroundTint="@color/green"/>
+            android:backgroundTint="@color/green"
+            android:background="@drawable/rounded_button"/>
 
         <ImageView
             android:layout_width="30dp"
