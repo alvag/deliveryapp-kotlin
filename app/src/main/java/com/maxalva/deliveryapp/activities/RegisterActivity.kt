@@ -10,6 +10,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.maxalva.deliveryapp.R
+import com.maxalva.deliveryapp.models.ResponseHttp
+import com.maxalva.deliveryapp.providers.UserProvider
+import com.maxalva.models.User
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -25,6 +31,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var editTextConfirmPassword: EditText
     private lateinit var btnRegister: Button
+
+    var userProvider = UserProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +65,27 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        Log.d(TAG, "El nombre es $name")
-        Log.d(TAG, "El apellido es $lastName")
-        Log.d(TAG, "El email es $email")
+        val user = User(
+            name = name,
+            lastName = lastName,
+            email = email,
+            phone = phone,
+            password = password,
+        )
+
+        userProvider.register(user)?.enqueue(object: Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "onResponse: ${response.body()}")
+                Toast.makeText(this@RegisterActivity, "onFailure: ${response.body()?.message}", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+                Toast.makeText(this@RegisterActivity, "onFailure: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 
     private fun goToLogin() {
