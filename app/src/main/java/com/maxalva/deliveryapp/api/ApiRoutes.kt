@@ -1,5 +1,6 @@
 package com.maxalva.deliveryapp.api
 
+import com.maxalva.deliveryapp.routes.AuthRoutes
 import com.maxalva.deliveryapp.routes.UserRoutes
 import retrofit2.create
 
@@ -13,6 +14,10 @@ class ApiRoutes {
 
     fun getUserRoutes(): UserRoutes {
         return retrofit.getClient(API_URL).create(UserRoutes::class.java)
+    }
+
+    fun getAuthRoutes(): AuthRoutes {
+        return retrofit.getClient(API_URL).create(AuthRoutes::class.java)
     }
 
 }

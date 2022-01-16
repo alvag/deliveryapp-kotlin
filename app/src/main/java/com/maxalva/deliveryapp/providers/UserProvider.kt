@@ -12,7 +12,7 @@ class UserProvider {
 
     init {
         val api = ApiRoutes()
-        userRoutes = api.getUserRoutes();
+        userRoutes = api.getUserRoutes()
     }
 
     fun register(user: User): Call<ResponseHttp>? {

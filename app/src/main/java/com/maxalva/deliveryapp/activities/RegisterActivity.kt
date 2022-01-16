@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var editTextConfirmPassword: EditText
     private lateinit var btnRegister: Button
 
-    var userProvider = UserProvider()
+    private var userProvider = UserProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: $response")
                 Log.d(TAG, "onResponse: ${response.body()}")
-                Toast.makeText(this@RegisterActivity, "onFailure: ${response.body()?.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegisterActivity, "onResponse: ${response.body()?.message}", Toast.LENGTH_LONG).show()
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
