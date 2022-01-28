@@ -15,7 +15,7 @@ import com.maxalva.deliveryapp.Utils.SharedPref
 import com.maxalva.deliveryapp.activities.client.home.ClientHomeActivity
 import com.maxalva.deliveryapp.models.ResponseHttp
 import com.maxalva.deliveryapp.providers.AuthProvider
-import com.maxalva.models.User
+import com.maxalva.deliveryapp.models.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         sharedPref = SharedPref(this)
 
         if (!sharedPref.getData("user").isNullOrBlank()) {
-            goToClientHome()
+            val userStr = sharedPref.getData("user")
+            val user = parseUser(userStr!!)
+            redirectUser(user)
         }
     }
 
@@ -69,18 +71,22 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onResponse: ${response.body()}")
 
                 if (response.body()?.isSuccess == true) {
-                    Toast.makeText(this@MainActivity, "onResponse: ${response.body()?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "${response.body()?.message}", Toast.LENGTH_LONG).show()
                     saveUserSession(response.body()?.data.toString())
-                    goToClientHome()
                 }
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
-                Toast.makeText(this@MainActivity, "onFailure: ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_LONG).show()
             }
 
         })
+    }
+
+    private fun goToSelectRole() {
+        val i = Intent(this, SelectRoleActivity::class.java)
+        startActivity(i)
     }
 
     private fun goToClientHome() {
@@ -103,10 +109,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveUserSession(data: String) {
         val sharedPref = SharedPref(this)
-        val gson = Gson()
-        val user = gson.fromJson(data, User::class.java)
-
+        val user = parseUser(data)
         sharedPref.save("user", user)
+        redirectUser(user)
+    }
+
+    private fun redirectUser(user: User) {
+        if (user.roles?.size!! > 1) {
+            goToSelectRole()
+        } else {
+            goToClientHome()
+        }
+    }
+
+    private fun parseUser(data: String): User {
+        val gson = Gson()
+        return gson.fromJson(data, User::class.java);
     }
 
 }

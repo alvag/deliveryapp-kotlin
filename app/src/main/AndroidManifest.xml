@@ -14,6 +14,9 @@
         android:theme="@style/Theme.DeliveryApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.SelectRoleActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.client.home.ClientHomeActivity"
             android:exported="false" />
         <activity

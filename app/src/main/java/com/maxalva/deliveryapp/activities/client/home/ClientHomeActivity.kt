@@ -9,7 +9,7 @@ import com.google.gson.Gson
 import com.maxalva.deliveryapp.R
 import com.maxalva.deliveryapp.Utils.SharedPref
 import com.maxalva.deliveryapp.activities.MainActivity
-import com.maxalva.models.User
+import com.maxalva.deliveryapp.models.User
 
 class ClientHomeActivity : AppCompatActivity() {
 

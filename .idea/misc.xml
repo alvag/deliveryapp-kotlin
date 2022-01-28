@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/activity_client_home.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_select_role.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/layout/cardview_roles.xml" value="0.20052083333333334" />
       </map>
     </option>
   </component>
