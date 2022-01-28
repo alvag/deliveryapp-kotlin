@@ -1,6 +1,7 @@
 package com.maxalva.deliveryapp.activities
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -13,7 +14,10 @@ import com.google.gson.Gson
 import com.maxalva.deliveryapp.R
 import com.maxalva.deliveryapp.Utils.SharedPref
 import com.maxalva.deliveryapp.activities.client.home.ClientHomeActivity
+import com.maxalva.deliveryapp.activities.delivery.home.DeliveryHomeActivity
+import com.maxalva.deliveryapp.activities.restaurant.home.RestaurantHomeActivity
 import com.maxalva.deliveryapp.models.ResponseHttp
+import com.maxalva.deliveryapp.models.Role
 import com.maxalva.deliveryapp.providers.AuthProvider
 import com.maxalva.deliveryapp.models.User
 import retrofit2.Call
@@ -65,13 +69,17 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        authProvider.login(email, password)?.enqueue(object: Callback<ResponseHttp> {
+        authProvider.login(email, password)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: $response")
                 Log.d(TAG, "onResponse: ${response.body()}")
 
                 if (response.body()?.isSuccess == true) {
-                    Toast.makeText(this@MainActivity, "${response.body()?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                     saveUserSession(response.body()?.data.toString())
                 }
             }
@@ -84,27 +92,13 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun goToSelectRole() {
-        val i = Intent(this, SelectRoleActivity::class.java)
-        startActivity(i)
-    }
-
-    private fun goToClientHome() {
-        val i = Intent(this, ClientHomeActivity::class.java)
-        startActivity(i)
-    }
-
-    private fun goToRegister() {
-        val i = Intent(this, RegisterActivity::class.java)
-        startActivity(i)
-    }
-
     private fun isValidForm(email: String, password: String): Boolean {
         return !(email.isBlank() || password.isBlank() || !email.isEmailValid())
     }
 
     private fun String.isEmailValid(): Boolean {
-        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
     }
 
     private fun saveUserSession(data: String) {
@@ -115,10 +109,64 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun redirectUser(user: User) {
-        if (user.roles?.size!! > 1) {
-            goToSelectRole()
-        } else {
-            goToClientHome()
+        if (!sharedPref.getData("role").isNullOrBlank()) {
+            val role = sharedPref.getData("role")?.replace("\"", "")
+            goToRoleView(role!!)
+            return
+        }
+
+        when {
+            user.roles?.size!! > 1 -> {
+                goToSelectRole()
+            }
+            user.roles.size == 1 -> {
+                goToRoleView(user.roles[0].name)
+            }
+            else -> {
+                goToClientHome()
+            }
+        }
+    }
+
+    private fun goToSelectRole() {
+        val i = Intent(this, SelectRoleActivity::class.java)
+        startActivity(i)
+    }
+
+    private fun goToClientHome() {
+        val i = Intent(this, ClientHomeActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK
+        startActivity(i)
+    }
+
+    private fun goToRestaurantHome() {
+        val i = Intent(this, RestaurantHomeActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK
+        startActivity(i)
+    }
+
+    private fun goToDeliveryHome() {
+        val i = Intent(this, DeliveryHomeActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK
+        startActivity(i)
+    }
+
+    private fun goToRegister() {
+        val i = Intent(this, RegisterActivity::class.java)
+        startActivity(i)
+    }
+
+    private fun goToRoleView(roleName: String? = null) {
+        when (roleName) {
+            "RESTAURANTE" -> {
+                goToRestaurantHome()
+            }
+            "REPARTIDOR" -> {
+                goToDeliveryHome()
+            }
+            else -> {
+                goToClientHome()
+            }
         }
     }
 

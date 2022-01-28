@@ -36,11 +36,13 @@ class ClientHomeActivity : AppCompatActivity() {
 
     private fun logout() {
         sharedPref.remove("user")
+        sharedPref.remove("role")
         goToLogin()
     }
 
     private fun goToLogin() {
         val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(i)
     }
 

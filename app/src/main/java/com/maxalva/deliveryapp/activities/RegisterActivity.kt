@@ -99,6 +99,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun goToClientHome() {
         val i = Intent(this, ClientHomeActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(i)
     }
 
