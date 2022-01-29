@@ -76,15 +76,19 @@ class RegisterActivity : AppCompatActivity() {
             password = password,
         )
 
-        userProvider.register(user)?.enqueue(object: Callback<ResponseHttp> {
+        userProvider.register(user)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: $response")
                 Log.d(TAG, "onResponse: ${response.body()}")
 
                 if (response.body()?.isSuccess == true) {
-                    Toast.makeText(this@RegisterActivity, "${response.body()?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                     saveUserSession(response.body()?.data.toString())
-                    goToClientHome()
+                    goToSaveImage()
                 }
 
             }
@@ -97,9 +101,9 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
-    private fun goToClientHome() {
-        val i = Intent(this, ClientHomeActivity::class.java)
-        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    private fun goToSaveImage() {
+        val i = Intent(this, SaveImageActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
     }
 

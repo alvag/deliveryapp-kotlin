@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun parseUser(data: String): User {
         val gson = Gson()
-        return gson.fromJson(data, User::class.java);
+        return gson.fromJson(data, User::class.java)
     }
 
 }

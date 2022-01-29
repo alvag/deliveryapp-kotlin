@@ -1,5 +1,6 @@
 package com.maxalva.deliveryapp.models
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
 
@@ -20,5 +21,9 @@ class User(
 
     override fun toString(): String {
         return "User(id=$id, name='$name', lastName='$lastName', phone='$phone', email='$email', image=$image, isAvailable=$isAvailable, sessionToken=$sessionToken, password='$password', createdAt=$createdAt, updatedAt=$updatedAt, roles=$roles)"
+    }
+
+    fun toJson(): String {
+        return Gson().toJson(this)
     }
 }

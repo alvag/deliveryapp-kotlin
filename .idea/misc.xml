@@ -5,12 +5,14 @@
       <map>
         <entry key="app/src/main/res/drawable/edittext_custom.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.36302083333333335" />
+        <entry key="app/src/main/res/drawable/ic_person.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/activity_client_home.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_delivery_home.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_restaurant_home.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/layout/activity_save_image.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/activity_select_role.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/layout/cardview_roles.xml" value="0.20052083333333334" />
       </map>

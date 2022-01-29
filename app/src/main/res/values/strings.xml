@@ -15,4 +15,7 @@
     <string name="sign_up">Registrarte</string>
     <string name="back_to_login">Volver al login</string>
     <string name="log_out">Cerrar Sesión</string>
+    <string name="complete_your_information">COMPLETA TU INFORMACIÓN</string>
+    <string name="confirm">Confirmar</string>
+    <string name="skip_step">Saltar este paso</string>
 </resources>
