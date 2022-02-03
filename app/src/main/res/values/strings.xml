@@ -18,4 +18,9 @@
     <string name="complete_your_information">COMPLETA TU INFORMACIÓN</string>
     <string name="confirm">Confirmar</string>
     <string name="skip_step">Saltar este paso</string>
+    <string name="home">Home</string>
+    <string name="profile">Perfil</string>
+    <string name="orders">Pedidos</string>
+    <string name="categories">Categorías</string>
+    <string name="products">Productos</string>
 </resources>
